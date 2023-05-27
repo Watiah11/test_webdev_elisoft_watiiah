@@ -1,0 +1,27 @@
+<?php
+
+function generateMenuHierarchy($menus, $parent_id = 0, $prefix = '') {
+    $output = '';
+    foreach ($menus as $menu) {
+        if ($menu['parent_id'] == $parent_id) {
+            $output .= $prefix . '- ' . $menu['nama'] . PHP_EOL;
+            $output .= generateMenuHierarchy($menus, $menu['id'], $prefix . '  ');
+        }
+    }
+    return $output;
+}
+
+$menus = [
+    ['id' => 1, 'nama' => 'Menu 1', 'parent_id' => 0],
+    ['id' => 2, 'nama' => 'Menu 1.1', 'parent_id' => 1],
+    ['id' => 3, 'nama' => 'Menu 1.2', 'parent_id' => 1],
+    ['id' => 4, 'nama' => 'Menu 2', 'parent_id' => 0],
+    ['id' => 5, 'nama' => 'Menu 2.1', 'parent_id' => 4],
+    ['id' => 6, 'nama' => 'Menu 2.2', 'parent_id' => 4],
+    ['id' => 7, 'nama' => 'Menu 2.1.1', 'parent_id' => 5],
+    ['id' => 8, 'nama' => 'Menu 3', 'parent_id' => 0],
+];
+
+$menuHierarchy = generateMenuHierarchy($menus);
+echo $menuHierarchy;
+?>
